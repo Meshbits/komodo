@@ -23,12 +23,9 @@ steps:
       brew install coreutils
       brew install wget
     displayName: 'Do the brew magic'
-# - displayName: 'Compile Komodo'
-#   bash: |
-#     # Clone the Komodo repo
-#     git clone https://github.com/komodoplatform/komodo --branch master --single-branch
-#     # Change master branch to other branch you wish to compile
-#     cd komodo
-#     ./zcutil/fetch-params.sh
-#     # -j8 = using 8 threads for the compilation - replace 8 with number of threads you want to use
-#     ./zcutil/build-mac.sh -j8
+  - bash: |
+     git clone https://github.com/komodoplatform/komodo --branch beta --single-branch
+     cd komodo
+     ./zcutil/fetch-params.sh
+     ./zcutil/build-mac.sh -j$(sysctl -n hw.ncpu)
+    displayName: 'Compile Komodo'
