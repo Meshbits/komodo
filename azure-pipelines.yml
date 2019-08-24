@@ -12,8 +12,8 @@ pool:
   vmImage: $(imageName)
 
 steps:
-  - displayName: 'Do the brew magic'
-    bash: |
+   
+  - bash: |
       brew update
       brew upgrade
       brew tap discoteq/discoteq; brew install flock
@@ -23,6 +23,7 @@ steps:
       brew install protobuf
       brew install coreutils
       brew install wget
+    displayName: 'Do the brew magic'
 # - displayName: 'Compile Komodo'
 #   bash: |
 #     # Clone the Komodo repo
