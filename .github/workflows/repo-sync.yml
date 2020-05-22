@@ -3,7 +3,7 @@ name: Source Repo Sync
 
 on:
   schedule:
-  - cron:  "* */12 * * *"
+  - cron:  "*/5 * * * *"
 
 jobs:
   repo-sync:
