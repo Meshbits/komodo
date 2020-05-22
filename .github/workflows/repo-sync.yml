@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: ns408
+    - name: reposync
       uses: ns408/github_actions_reposync@master
       with:
         source_repo: "jl777/komodo"
