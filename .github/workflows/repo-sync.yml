@@ -13,7 +13,7 @@ jobs:
     - name: reposync
       uses: ns408/github_actions_reposync@master
       with:
-        source_repo: "jl777/komodo"
+        source_repo: "KomodoPlatform/komodo"
         source_branch: "dev"
         destination_branch: "dev"
         github_token: ${{ secrets.meshbits_repo_sync }}
