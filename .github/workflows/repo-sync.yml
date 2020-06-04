@@ -2,10 +2,6 @@
 name: Source Repo Sync
 
 on:
-  push:
-    branches: 
-      - master
-      - dev
   schedule:
   - cron:  "0 0 * * 0"
 
