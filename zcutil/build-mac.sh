@@ -45,9 +45,16 @@ make "$@" -C ./depends/ V=1 NO_QT=1 NO_PROTON=1
 #BUILD CCLIB
 
 WD=$PWD
+
 cd src/cc
 echo $PWD
+echo Making cclib...
 ./makecustom
+
+cd ./priceslibs
+echo Making prices feeds custom libs...
+make all
+
 cd $WD
 
 ./autogen.sh
@@ -56,3 +63,6 @@ CXXFLAGS='-arch x86_64 -I/usr/local/Cellar/gcc\@8/8.3.0/include/c++/8.3.0/ -I$PR
 ./configure --prefix="${PREFIX}" --with-gui=no "$HARDENING_ARG" "$LCOV_ARG"
 
 make "$@" V=1 NO_GTEST=1 STATIC=1
+
+cd $WD/src/cc/dapps/
+make subatomic
