@@ -86,9 +86,9 @@ char* get_komodo_config_path()
   fs::path conf_root = fs::path(std::getenv("HOME")) / ".komodo/komodo.conf";
   #endif
 #ifndef NATIVE_WINDOWS
-  return strdup(conf_root.c_str());
+  return strdup(conf_root.string().c_str());
 #else
-  return _strdup((const char *)conf_root.c_str());
+  return _strdup((const char *)conf_root.string().c_str());
 #endif // !NATIVE_WINDOWS
 
 
@@ -103,9 +103,9 @@ char* get_komodo_config_parent_path()
   fs::path conf_root = fs::path(std::getenv("HOME")) / ".komodo";
   #endif
 #ifndef NATIVE_WINDOWS
-  return strdup(conf_root.c_str());
+  return strdup(conf_root.string().c_str());
 #else
-  return _strdup((const char*)conf_root.c_str());
+  return _strdup((const char*)conf_root.string().c_str());
 #endif // !NATIVE_WINDOWS
 }
 
@@ -119,7 +119,7 @@ bool get_conf_content(const std::string& ticker, std::vector<std::string>& vec_o
     auto tmp = fs::path(path) / ticker / (ticker + ".conf");
     free(path);
 #ifndef NATIVE_WINDOWS
-    path = strdup(tmp.c_str());
+    path = strdup(tmp.string().c_str());
 #else
     path = _strdup((const char *)tmp.c_str());
 #endif // !NATIVE_WINDOWS
