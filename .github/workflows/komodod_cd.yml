@@ -106,10 +106,10 @@ jobs:
           sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
       - name: Build (Windows)
         env:
-          CC: gcc-8
-          CXX: g++-8
+          CC: /usr/bin/x86_64-w64-mingw32-gcc-posix
+          CXX: /usr/bin/x86_64-w64-mingw32-g++-posix
         run: |
-          ./zcutil/build-win.sh -j$(nproc)
+          ./zcutil/build-win-dtest.sh -j$(nproc)
           zip --junk-paths komodo-win src/komodod.exe src/komodo-cli.exe
       - name: Upload komodo-win.zip as artifact
         uses: actions/upload-artifact@v1
