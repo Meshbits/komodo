@@ -8,10 +8,8 @@ on:
     - dev
 
 jobs:
-
   linux-build:
     name: Linux Build
-    # using there as old release as possible with GHA worker to provide better compatibility
     runs-on: ubuntu-16.04
     steps:
 
@@ -48,7 +46,7 @@ jobs:
           CC: gcc-8
           CXX: g++-8
         run: |
-          ./zcutil/build.sh -j$(nproc)
+          ./zcutil/build.sh -j$(cat /proc/cpuinfo | grep processor | wc -l)
           zip --junk-paths komodo-linux src/komodod src/komodo-cli
       - name: Upload komodo-linux.zip as artifact
         uses: actions/upload-artifact@v1
@@ -66,16 +64,11 @@ jobs:
           brew update
           brew upgrade
           brew tap discoteq/discoteq; brew install flock
-          brew install autoconf autogen automake
-          brew install gcc@8
-          brew install binutils
-          brew install protobuf
-          brew install coreutils
-          brew install wget
-          brew install python3
+          brew install autoconf autogen automake binutils \
+            gcc@8 protobuf coreutils wget python3
       - name: Build (macOS)
         run: |
-          ./zcutil/build-mac.sh -j4
+          ./zcutil/build-mac.sh -j$(sysctl -n hw.ncpu)
           zip --junk-paths komodo-osx src/komodod src/komodo-cli
       - name: Upload komodo-osx.zip as artifact
         uses: actions/upload-artifact@v1
@@ -116,8 +109,8 @@ jobs:
           CC: /usr/bin/x86_64-w64-mingw32-gcc-posix
           CXX: /usr/bin/x86_64-w64-mingw32-g++-posix
         run: |
-          ./zcutil/build-win-dtest.sh -j$(nproc)
-          zip --junk-paths komodo-win src/komodod.exe src/komodo-cli.exe
+          ./zcutil/build-win-dtest.sh -j$(cat /proc/cpuinfo | grep processor | wc -l)
+          zip --junk-paths komodo-win src/*.exe src/*.dll
       - name: Upload komodo-win.zip as artifact
         uses: actions/upload-artifact@v1
         with:
