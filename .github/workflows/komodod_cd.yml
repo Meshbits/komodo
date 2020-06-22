@@ -41,7 +41,7 @@ jobs:
         run: |
           nproc=$(cat /proc/cpuinfo | grep processor | wc -l)
           docker run -it -d --name ${{ env.CONTAINER_NAME }} -v $GITHUB_WORKSPACE:/workspace -w /workspace ${{ env.IMAGE_REPO }}
-          docker exec -w /workspace -e CC=gcc-8 -e CXX=g++-8 ${{ env.CONTAINER_NAME }} ./zcutil/build.sh -j$(nproc)
+          docker exec -w /workspace ${{ env.CONTAINER_NAME }} ./zcutil/build.sh -j$(nproc)
           docker exec -w /workspace ${{ env.CONTAINER_NAME }} zip --junk-paths komodo-linux src/komodod src/komodo-cli
 
       - name: Upload komodo-linux.zip as artifact
