@@ -98,9 +98,7 @@ jobs:
         run: |
           nproc=$(cat /proc/cpuinfo | grep processor | wc -l)
           docker run -it -d --name ${{ env.CONTAINER_NAME }} -v $GITHUB_WORKSPACE:/workspace -w /workspace ${{ env.IMAGE_REPO }}
-          docker exec -e CC=/usr/bin/x86_64-w64-mingw32-gcc-posix -e CXX=/usr/bin/x86_64-w64-mingw32-g++-posix \
-            -w /workspace ${{ env.CONTAINER_NAME }} \
-            ./zcutil/build-win-dtest.sh -j$(nproc)
+          docker exec -w /workspace ${{ env.CONTAINER_NAME }} ./zcutil/build-win.sh -j$(nproc) \
           docker exec  -w /workspace ${{ env.CONTAINER_NAME }} \
             zip --junk-paths komodo-win src/*.exe src/*.dll
 
