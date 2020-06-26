@@ -15,16 +15,6 @@ jobs:
       CONTAINER_NAME: komodobuild_linux
 
     steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-
-      - name: Shortify commit sha
-        shell: bash
-        run: echo "##[set-output name=sha_short;]$(echo ${GITHUB_SHA::7})"
-        id: shortify_commit
-
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -55,9 +45,11 @@ jobs:
   macOS-build:
     name: macOS-build
     runs-on: macos-latest
- 
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Install deps (macOS)
         run: |
           brew update
@@ -150,8 +142,14 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            tag_name: cd_release_${{ steps.shortify_commit.outputs.sha_short }}_${{ steps.extract_branch.outputs.branch }}
-            release_name: CD Release ${{ steps.shortify_commit.outputs.sha_short }} ${{ steps.extract_branch.outputs.branch }}
+            tag_name: release_v0.${GITHUB_RUN_NUMBER}
+            release_name: release_v0.${GITHUB_RUN_NUMBER}
+            body: |
+              CD Release
+              Github SHA: ${GITHUB_SHA}
+              Branch: $(echo ${GITHUB_REF#refs/heads/})
+              Build number: ${GITHUB_RUN_NUMBER}
+              version: v0.${GITHUB_RUN_NUMBER}
             draft: false
             prerelease: true
 
@@ -163,7 +161,7 @@ jobs:
           with:
             upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
             asset_path: komodo-linux/komodo-linux.zip
-            asset_name: komodo_${{ steps.shortify_commit.outputs.sha_short }}_${{ steps.extract_branch.outputs.branch }}_linux.zip
+            asset_name: komodo_linux_v0.${GITHUB_RUN_NUMBER}.zip
             asset_content_type: application/zip
 
         - name: Upload macOS Release Asset
@@ -174,7 +172,7 @@ jobs:
           with:
             upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
             asset_path: komodo-macOS/komodo-macOS.zip
-            asset_name: komodo_${{ steps.shortify_commit.outputs.sha_short }}_${{ steps.extract_branch.outputs.branch }}_macOS.zip
+            asset_name: komodo_macOS_v0.${GITHUB_RUN_NUMBER}.zip
             asset_content_type: application/zip
 
         - name: Upload Windows Release Asset
@@ -185,5 +183,5 @@ jobs:
           with:
             upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
             asset_path: komodo-win/komodo-win.zip
-            asset_name: komodo_${{ steps.shortify_commit.outputs.sha_short }}_${{ steps.extract_branch.outputs.branch }}_win.zip
+            asset_name: komodo_win_v0.${GITHUB_RUN_NUMBER}.zip
             asset_content_type: application/zip
