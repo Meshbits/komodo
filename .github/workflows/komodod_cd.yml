@@ -11,7 +11,7 @@ jobs:
     name: linux-build
     runs-on: ubuntu-latest
     env:
-      IMAGE_REPO: docker.pkg.github.com/meshbits/komodo/komodobuild_linux:0.1
+      IMAGE_REPO: docker.pkg.github.com/meshbits/komodo/komodobuild_linux:latest
       CONTAINER_NAME: komodobuild_linux
 
     steps:
@@ -73,7 +73,7 @@ jobs:
     name: windows-build (mingw)
     runs-on: ubuntu-20.04
     env:
-      IMAGE_REPO: docker.pkg.github.com/meshbits/komodo/komodobuild_win:0.1
+      IMAGE_REPO: docker.pkg.github.com/meshbits/komodo/komodobuild_win:latest
       CONTAINER_NAME: komodobuild_win
 
     steps:
