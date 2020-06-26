@@ -142,14 +142,14 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            tag_name: release_v0.${GITHUB_RUN_NUMBER}
-            release_name: release_v0.${GITHUB_RUN_NUMBER}
+            tag_name: release_v0.${{ github.run_number }}
+            release_name: release_v0.${{ github.run_number }}
             body: |
               CD Release
-              Github SHA: ${GITHUB_SHA}
-              Branch: $(echo ${GITHUB_REF#refs/heads/})
-              Build number: ${GITHUB_RUN_NUMBER}
-              version: v0.${GITHUB_RUN_NUMBER}
+              Github SHA: ${{ github.sha }}
+              Branch: ${{ steps.extract_branch.outputs.branch }}
+              Build number: ${{ github.run_number }}
+              version: v0.${{ github.run_number }}
             draft: false
             prerelease: true
 
