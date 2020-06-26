@@ -161,7 +161,7 @@ jobs:
           with:
             upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
             asset_path: komodo-linux/komodo-linux.zip
-            asset_name: komodo_linux_v0.${GITHUB_RUN_NUMBER}.zip
+            asset_name: komodo_linux_v0.${{ github.run_number }}.zip
             asset_content_type: application/zip
 
         - name: Upload macOS Release Asset
@@ -172,7 +172,7 @@ jobs:
           with:
             upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
             asset_path: komodo-macOS/komodo-macOS.zip
-            asset_name: komodo_macOS_v0.${GITHUB_RUN_NUMBER}.zip
+            asset_name: komodo_macOS_v0.${{ github.run_number }}.zip
             asset_content_type: application/zip
 
         - name: Upload Windows Release Asset
@@ -183,5 +183,5 @@ jobs:
           with:
             upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
             asset_path: komodo-win/komodo-win.zip
-            asset_name: komodo_win_v0.${GITHUB_RUN_NUMBER}.zip
+            asset_name: komodo_win_v0.${{ github.run_number }}.zip
             asset_content_type: application/zip
