@@ -1,9 +1,14 @@
 name: Komodo build releases
 
+
 on:
   push:
     branches:
     - dev
+    - jl777_dev
+  schedule:
+    # Run at 00:00 UTC on Monday
+    - cron:  "0 0 * * 1"
 
 jobs:
 
