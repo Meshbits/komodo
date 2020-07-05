@@ -144,7 +144,7 @@ jobs:
         
         - name: Get KOMODO_VERSION
           shell: bash
-          run: echo "##[set-output name=version_id;]$(grep "define KOMODO_VERSION" src/rpc/misc.cpp | awk '{print $3}')"
+          run: echo "##[set-output name=version_id;]$(grep "define KOMODO_VERSION" src/rpc/misc.cpp | awk '{print $3}' | tr -d '"')"
           id: komodo_version
 
         - name: Create Release
